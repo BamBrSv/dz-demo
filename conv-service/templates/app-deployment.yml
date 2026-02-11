@@ -1,27 +1,25 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: conv-app-deployment
+  name: {{ .Values.app.name }}-deployment
 spec:
-  replicas: 1
+  replicas: {{ .Values.app.replicas }}
   selector:
     matchLabels:
-      components: frontend
+      components: {{ .Values.app.components }}
   template:
     metadata:
-      name: conv-app
+      name: {{ .Values.app.name }}
       labels:
-        components: frontend
+        components: {{ .Values.app.components }}
     spec:
       containers:
-        - name: conv-app
-          image: antonlarichev/conv-app
+        - name: {{ .Values.app.name }}
+          image: {{ .Values.app.image }}
           ports:
-            - containerPort: 80
+            - containerPort: {{ .Values.app.port }}
           resources:
-            limits:
-              memory: "128Mi"
-              cpu: "500m"
+            limits: {{ .Values.app.limits | toYml | nintent 14 }}
           env:
             - name: VITE_DOMAIN
               valueFrom:
@@ -38,3 +36,5 @@ spec:
             name: demo-config
 
 
+# toYml
+#nintent
