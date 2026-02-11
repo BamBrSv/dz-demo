@@ -1,11 +1,11 @@
-apiVersion: aaps/v1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: conv-app-deployment
 spec:
   replicas: 1
   selector:
-    matchLables:
+    matchLabels:
       components: frontend
   template:
     metadata:
