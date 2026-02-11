@@ -27,7 +27,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: rabbitmq-secret
-                  key: SEED_USERNAME
+                  key: SEED_USER_PASSWORD
           resources:
             limits:
               memory: "500Mi"
