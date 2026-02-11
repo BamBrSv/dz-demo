@@ -18,6 +18,8 @@ Adres:
   - country: Ru
     city: Moscow
     street: street
+    houseNumber: 1
+    apartmentNymber: 1
 
 Pets:
   - name: "cat"
