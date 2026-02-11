@@ -1,0 +1,27 @@
+User:
+  - isAdmin: on
+    name: Ivan
+    age: 30
+    employ: dev
+    skills: ["C++", "JS"]
+    adres: dom1
+    pets: ["cat", "dog"]
+
+Skill:
+  - name: skill1
+    lvl: 4
+    mult: |
+      строка
+      строка
+
+Adres:
+  - country: Ru
+    city: Moscow
+    street: street
+    houseNumber: 1
+    apartmentNymber: 1
+
+Pets:
+  - name: "cat"
+    breed: "cat"
+    canMeoy: on
