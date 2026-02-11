@@ -19,7 +19,7 @@ spec:
           ports:
             - containerPort: {{ .Values.app.port }}
           resources:
-            limits: {{ .Values.app.limits | toYml | nintent 14 }}
+            limits: {{ .Values.app.limits | toYml | nindent 14 }}
           env:
             - name: VITE_DOMAIN
               valueFrom:
