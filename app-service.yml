@@ -1,0 +1,11 @@
+apiVersiom: v1
+kind: Service
+matadata:
+  name: conv-app-clusterip
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      protocol: TCP
+  selector:
+    components: frontend
