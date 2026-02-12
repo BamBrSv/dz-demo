@@ -1,2 +1,2 @@
-Вы успешно установили приложение {{ .Releases.Name}} {{ .Chart.Version }}
+Вы успешно установили приложение {{ .Release.Name}} {{ .Chart.Version }}
 Грац
