@@ -39,7 +39,7 @@ rabbitmq:
   limits:
     memory: "128Mi"
     cpu: "500m"
-  env:
+  envs:
     - SEED_USERNAME
     - SEED_USER_PASSWORD
 

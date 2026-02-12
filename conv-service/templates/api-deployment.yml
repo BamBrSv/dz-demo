@@ -29,7 +29,7 @@ spec:
             #   readOnly: true
           env:
             {{- range .Values.api.envs }}
-            {{- $data := dict "name" $.Values.rabbitmq.name "end" . }}
+            {{- $data := dict "name" $.Values.rabbitmq.name "env" . }}
             {{- include "env.tmpl"  $data | indent 12}}
             {{- end }}
             # - name: AMQP_EXCHANGE
@@ -54,7 +54,7 @@ spec:
             #       key: AMQP_HOSTNAME
           livenessProbe:
             exec: 
-              comand:
+              command:
                 -curl
                 - --fail
                 - http://localhost:3000/api

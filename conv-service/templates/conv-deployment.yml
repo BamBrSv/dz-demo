@@ -21,7 +21,7 @@ spec:
             limits: {{ .Values.conv.limits | toYml | nindent 14 }}
           env:
             {{- range .Values.conv.envs }}
-            {{- $data := dict "name" $.Values.rabbitmq.name "end" . }}
+            {{- $data := dict "name" $.Values.rabbitmq.name "env" . }}
             {{- include "env.tmpl"  $data | indent 12}}
             {{- end }}
             # - name: AMQP_EXCHANGE
