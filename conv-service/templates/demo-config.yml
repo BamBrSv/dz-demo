@@ -6,7 +6,4 @@ metadata:
 #   VITE_DOMAIN: demo 
 data:
   VITE_DOMAIN: demo 
-  key: {{ .Release.Name }}
-  name: {{ .Values.name | upper | quote }}
-  chart: {{ .Chart.AppVersion | quote }}
-  date: {{ now | date "2006-01-02" | quote }}
+  

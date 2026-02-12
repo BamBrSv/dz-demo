@@ -8,3 +8,86 @@ app:
   limits:
     memory: "128Mi"
     cpu: "500m"
+
+conf:
+  name: demo-config
+
+api: 
+  version: 1
+  pvc: api-pvc
+  components: backend
+  name: conv-api
+  image: antonlarichev/conv-api
+  port: 3000
+  replicas: 1
+  limits:
+    memory: "128Mi"
+    cpu: "500m"
+  envs:
+    - AMQP_EXCHANGE
+    - AMQP_USER
+    - AMQP_PASSWORD
+    - AMQP_HOSTNAME
+
+rabbitmq: 
+  version: 1
+  components: arabbitmq
+  name: arabbitmq
+  image: rabbitmq:3.12.7-management
+  port: 5672
+  replicas: 1
+  limits:
+    memory: "128Mi"
+    cpu: "500m"
+  env:
+    - SEED_USERNAME
+    - SEED_USER_PASSWORD
+
+conv: 
+  version: 5
+  components: conv
+  name: conv
+  image: antonlarichev/conv-api
+  port: 3000
+  replicas: 5
+  limits:
+    memory: "128Mi"
+    cpu: "500m"
+  envs:
+    - AMQP_EXCHANGE
+    - AMQP_USER
+    - AMQP_PASSWORD
+    - AMQP_HOSTNAME
+    - AMQP_QUEUE
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+env: prod
+value:
+  req:
+    limits:
+      memory: "128Mi"
+      cpu: "500m"
+
+users: 
+  - name: Anton
+    role: Admin
+  - name: Vasya
+    role: Admin
