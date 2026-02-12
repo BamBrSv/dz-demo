@@ -1,0 +1,71 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.api.name }}-deployment
+spec:
+  replicas: {{ .Values.api.replicas }}
+  selector:
+    matchLabels:
+      components: {{ .Values.api.components }}
+  template:
+    metadata:
+      labels:
+        components: {{ .Values.api.components }}
+    spec:
+      containers:
+        - name: {{ .Values.api.name }}
+          image: {{ .Values.api.image }}
+          ports:
+            - containerPort: {{ .Values.api.port }}
+          resources:
+            limits: {{ .Values.api.limits | toYml | nindent 14 }}
+          volumeMounts:
+            - name: api-data
+              mountPath: /opt/app/uploads
+              subPath: {{ .Values.api.components }}
+                          # 123
+            # - name: test
+            #   mountPath: /etc/test
+            #   readOnly: true
+          env:
+            {{- range .Values.api.envs }}
+            {{- $data := dict "name" $.Values.rabbitmq.name "env" . }}
+            {{- include "env.tmpl"  $data | indent 12}}
+            {{- end }}
+            # - name: AMQP_EXCHANGE
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: rabbitmq-secret
+            #       key: AMQP_EXCHANGE
+            # - name: AMQP_USER
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: rabbitmq-secret
+            #       key: AMQP_USER
+            # - name: AMQP_PASSWORD
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: rabbitmq-secret
+            #       key: AMQP_PASSWORD
+            # - name: AMQP_HOSTNAME
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: rabbitmq-secret
+            #       key: AMQP_HOSTNAME
+          livenessProbe:
+            exec: 
+              command:
+                - curl
+                - --fail
+                - http://localhost:3000/api
+      volumes:
+                  # 123
+        - name: api-data
+          persistentVolumeClaim:
+            claimName: api-pvc
+        # - name: test
+        #   configMap:
+        #     name: demo-config
+
+                        # 123
+

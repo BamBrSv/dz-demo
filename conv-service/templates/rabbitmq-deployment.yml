@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.rabbitmq.name }}-deployment
+spec:
+  replicas: {{ .Values.rabbitmq.replicas }}
+  selector:
+    matchLabels:
+      components: {{ .Values.rabbitmq.components }}
+  template:
+    metadata:
+      labels:
+        components: {{ .Values.rabbitmq.components }}
+    spec:
+      containers:
+        - name: {{ .Values.rabbitmq.name }}
+          image: rabbitmq:3.12.7-management
+          ports:
+            - containerPort: {{ .Values.rabbitmq.port }}
+          env:
+            {{- range .Values.rabbitmq.envs }}
+            {{- $data := dict "name" $.Values.rabbitmq.name "env" . }}
+            {{- include "env.tmpl"  $data | indent 12}}
+            {{- end }}
+            # - name: SEED_USERNAME
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: rabbitmq-secret
+            #       key: SEED_USERNAME
+            # - name: SEED_USER_PASSWORD
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: rabbitmq-secret
+            #       key: SEED_USER_PASSWORD
+          resources:
+            limits: {{ .Values.rabbitmq.limits | toYml | nindent 14 }}
+          volumeMounts:
+            - name: rabbitmq-data
+              mountPath: /var/lib/rabbitmq
+              subPath: rabbitmq
+      volumes:
+        - name: rabbitmq-data
+          persistentVolumeClaim:
+            claimName: rabbitmq-pvc
+
