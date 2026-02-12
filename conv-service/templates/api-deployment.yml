@@ -55,7 +55,7 @@ spec:
           livenessProbe:
             exec: 
               command:
-                -curl
+                - curl
                 - --fail
                 - http://localhost:3000/api
       volumes:

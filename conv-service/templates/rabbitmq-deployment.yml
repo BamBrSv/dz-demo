@@ -19,7 +19,7 @@ spec:
             - containerPort: {{ .Values.rabbitmq.port }}
           env:
             {{- range .Values.rabbitmq.envs }}
-            {{- $data := dict "name" $.Values.rabbitmq.name "end" . }}
+            {{- $data := dict "name" $.Values.rabbitmq.name "env" . }}
             {{- include "env.tmpl"  $data | indent 12}}
             {{- end }}
             # - name: SEED_USERNAME
